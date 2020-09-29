@@ -2,12 +2,12 @@
 /**
  * 腾讯云人脸识别人员库操作
  * 腾讯云文档地址:https://cloud.tencent.com/document/product/867/45023
+ * Created by PhpStorm.
+ * User: Hongfei
  */
 
 
-namespace common\models;
-
-class AiFace
+class TencentFace
 {
     private static $_instance = null;
     protected $url = 'iai.tencentcloudapi.com';
