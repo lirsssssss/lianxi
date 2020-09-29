@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 微信订阅消息推送
  */
@@ -7,8 +6,6 @@
 
 class WechatMsg
 {
-
-
     /**
      * 微信模板消息
      * @param $data

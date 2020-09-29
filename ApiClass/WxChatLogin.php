@@ -1,10 +1,12 @@
 <?php
 /**
+ * 微信小程序授权登录
  * Created by PhpStorm.
  * User: Hongfei
  * Date: 2019/3/21
  * Time: 上午10:00
  */
+
 
 class WxChatLogin
 {
