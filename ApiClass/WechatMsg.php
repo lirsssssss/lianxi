@@ -8,12 +8,12 @@ class WechatMsg
 {
     /**
      * 微信模板消息
-     * @param $data
-     * @param $access_token
-     * @param $type
+     * @param $data => 发送的消息组装的数据
+     * @param $type => 模板类型
      * @return mixed
      */
-    public function Send($data,$access_token,$type){
+    public function Send($data,$type){
+        $access_token = $this->getAccess_token();
         //组装url
         $url = 'https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=' . $access_token;
         //组装需要推送的数据模板
