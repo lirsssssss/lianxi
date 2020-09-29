@@ -14,7 +14,7 @@ class WxChatLogin
     public static $IllegalBuffer = -41003;
     public static $DecodeBase64Error = -41004;
 
-    protected $appid = '';
+    protected $AppId = '';
     protected $AppSecret = '';
     protected $sessionKey;
     /**
@@ -24,9 +24,9 @@ class WxChatLogin
      */
     public function WxLogin($code)
     {
-        $APPID = $this->appid;
+        $AppId = $this->AppId;
         $AppSecret = $this->AppSecret;
-        $url = "https://api.weixin.qq.com/sns/jscode2session?appid=" . $APPID . "&secret=" . $AppSecret . "&js_code=" . $code . "&grant_type=authorization_code";
+        $url = "https://api.weixin.qq.com/sns/jscode2session?appid=" . $AppId . "&secret=" . $AppSecret . "&js_code=" . $code . "&grant_type=authorization_code";
         $arr = $this->curl_get($url);
         $arr = json_decode($arr, true);
         return $arr;
@@ -85,12 +85,17 @@ class WxChatLogin
         {
             return self::$IllegalBuffer;
         }
-        if( $dataObj->watermark->appid != $this->appid )
+        if( $dataObj->watermark->appid != $this->AppId )
         {
             return self::$IllegalBuffer;
         }
         $data = $result;
         return self::$OK;
+    }
+
+    public function GetAccessToken(){
+        $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$this->AppId}&secret={$this->AppSecret}";
+        return json_decode(file_get_contents($url), 1);
     }
 
     /**
