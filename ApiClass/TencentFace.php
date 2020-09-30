@@ -11,8 +11,8 @@ class TencentFace
 {
     private static $_instance = null;
     protected $url = 'iai.tencentcloudapi.com';
-    protected $SecretId  = 'AKIDNUMyP1wWO76oeFRYonWzC9G5uTlnpsa2';
-    protected $SecretKey = 'M9fwwtZz95qNdc64tRxEHEUgAOM8vRgg';
+    protected $SecretId  = '';
+    protected $SecretKey = '';
     protected $Version   = '2020-03-03';
     protected $Region    = 'ap-shanghai';
     protected $GroupId   = '11111';//单人员库取值
