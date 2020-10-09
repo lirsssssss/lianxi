@@ -17,6 +17,7 @@ class YiMiCloud
     protected $accounts;//账号请求方式
     protected $sigParameter;//API 验证参数
     protected $authorization;//head验证参数
+    private static $_YiMi;//对象实例
     //    protected $subAccountSid;//子账号
 
     /**
@@ -35,6 +36,18 @@ class YiMiCloud
         $this->authorization = base64_encode($this->accountSid.':'.$time);//验证信息Authorization
         $this->sigParameter = strtoupper(MD5($this->accountSid.$this->accountToken.$time));//验证
     }
+
+    /**
+     * 单例模式
+     * @param null $accountSid
+     * @param null $accountToken
+     * @return YiMiCloud
+     */
+    static function getInstance($accountSid=null,$accountToken=null)
+    {
+        return self::$_YiMi ? self::$_YiMi : new self($accountSid,$accountToken);
+    }
+
 
     /**
      * 主账户管理功能接口 获取主账号信息
