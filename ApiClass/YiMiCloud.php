@@ -26,15 +26,15 @@ class YiMiCloud
      * @param null $accountSid 子账号操作需要传递id
      * @param null $accountToken 子账号操作需要传递Token
      */
-    public function __construct($accountSid=null,$accountToken=null)
+    public function __construct($accountSid = null, $accountToken = null)
     {
         $time = date('YmdHis');//时间参数
         //判断主账号还是子账号 不传递子账号以及子账号token 默认为主账号
         $this->accountSid = !empty($accountSid) && !empty($accountToken) ? $accountSid : $this->accountSid;
         $this->accountToken = !empty($accountToken) && !empty($accountSid) ? $accountToken : $this->accountToken;
-        $this->accounts = !empty($accountToken) && !empty($accountSid) ? 'SubAccounts' : 'Accounts' ;
-        $this->authorization = base64_encode($this->accountSid.':'.$time);//验证信息Authorization
-        $this->sigParameter = strtoupper(MD5($this->accountSid.$this->accountToken.$time));//验证
+        $this->accounts = !empty($accountToken) && !empty($accountSid) ? 'SubAccounts' : 'Accounts';
+        $this->authorization = base64_encode($this->accountSid . ':' . $time);//验证信息Authorization
+        $this->sigParameter = strtoupper(MD5($this->accountSid . $this->accountToken . $time));//验证
     }
 
     /**
@@ -43,9 +43,9 @@ class YiMiCloud
      * @param null $accountToken
      * @return YiMiCloud
      */
-    static function getInstance($accountSid=null,$accountToken=null)
+    static function getInstance($accountSid = null, $accountToken = null)
     {
-        return self::$_YiMi ? self::$_YiMi : new self($accountSid,$accountToken);
+        return self::$_YiMi ? self::$_YiMi : new self($accountSid, $accountToken);
     }
 
 
@@ -61,9 +61,9 @@ class YiMiCloud
         ];
         $operation = 'AccountInfo';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -74,17 +74,17 @@ class YiMiCloud
     public function createSubAccount($param)
     {
         $curlPost['createSubAccount'] = [
-            'appId'=> $this->appId,//应用 Id
-            'nickName'=> $param['nickname'],//子账号昵称
-            'mobile'=> $param['mobile'],//子账号用户手机号码
-            'email'=> $param['email'],//子账号用户邮件地址
+            'appId' => $this->appId,//应用 Id
+            'nickName' => $param['nickname'],//子账号昵称
+            'mobile' => $param['mobile'],//子账号用户手机号码
+            'email' => $param['email'],//子账号用户邮件地址
         ];
 
         $operation = 'Applications/createSubAccount';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -94,49 +94,49 @@ class YiMiCloud
     public function subAccountList()
     {
         $curlPost['subAccountList'] = [
-            'appId'=> $this->appId,//应用 Id
+            'appId' => $this->appId,//应用 Id
         ];
         $operation = 'Applications/subAccountList';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 查询子账户
-     * @param $subAccountSid=>子账户Sid
+     * @param $subAccountSid =>子账户Sid
      * @return mixed
      */
     public function subAccount($subAccountSid)
     {
         $curlPost['subAccount'] = [
-            'appId'=> $this->appId,//应用 Id
-            'subAccountSid'=> $subAccountSid,//子账户 Sid
+            'appId' => $this->appId,//应用 Id
+            'subAccountSid' => $subAccountSid,//子账户 Sid
         ];
         $operation = 'Applications/subAccount';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 删除子账户
-     * @param $subAccountSid=>子账户Sid
+     * @param $subAccountSid =>子账户Sid
      * @return mixed
      */
     public function dropSubAccount($subAccountSid)
     {
         $curlPost['dropSubAccount'] = [
-            'appId'=> $this->appId,//应用 Id
-            'subAccountSid'=> $subAccountSid,//子账户 Sid
+            'appId' => $this->appId,//应用 Id
+            'subAccountSid' => $subAccountSid,//子账户 Sid
         ];
         $operation = 'Applications/dropSubAccount';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -147,17 +147,17 @@ class YiMiCloud
     public function updateSubAccount($param)
     {
         $curlPost['updateSubAccount'] = [
-            'appId'=> $this->appId,//应用 Id
-            'subAccountSid'=> $param['subAccountSid'],//子账户 Sid
-            'nickName'=> $param['nickName'],//子账号昵称
-            'mobile'=> $param['mobile'],//子账号用户手机号码
-            'email'=> $param['email'],//子账号用户邮件地址
+            'appId' => $this->appId,//应用 Id
+            'subAccountSid' => $param['subAccountSid'],//子账户 Sid
+            'nickName' => $param['nickName'],//子账号昵称
+            'mobile' => $param['mobile'],//子账号用户手机号码
+            'email' => $param['email'],//子账号用户邮件地址
         ];
         $operation = 'Applications/updateSubAccount';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -168,17 +168,17 @@ class YiMiCloud
     public function setCallLimit($param)
     {
         $curlPost['setCallLimit'] = [
-            'appId'=> $this->appId,//应用 Id
-            'limitType'=> $param['limitType'],//限制类型0-不限制(默认); 1-自然月+周一开 始计周; 2-自然月+周日开始计周; 3-非自然周 /月:当日前一周或月统计
+            'appId' => $this->appId,//应用 Id
+            'limitType' => $param['limitType'],//限制类型0-不限制(默认); 1-自然月+周一开 始计周; 2-自然月+周日开始计周; 3-非自然周 /月:当日前一周或月统计
             'dayLimit' => $param['dayLimit'],//每天呼叫次数限制(1-10)，0 表示不限制; 未输入表示保留上次的设置值。
-            'weekLimit'=> $param['weekLimit'],//每周呼叫次数限制(1-25)，0 表示不限制; 未输入表示保留上次的设置值。
-            'monthLimit'=> $param['monthLimit'],//每月呼叫次数限制(1-50)，0 表示不限制; 未输入表示保留上次的设置值。
+            'weekLimit' => $param['weekLimit'],//每周呼叫次数限制(1-25)，0 表示不限制; 未输入表示保留上次的设置值。
+            'monthLimit' => $param['monthLimit'],//每月呼叫次数限制(1-50)，0 表示不限制; 未输入表示保留上次的设置值。
         ];
         $operation = 'Applications/setCallLimit';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -189,72 +189,72 @@ class YiMiCloud
     public function billList($param)
     {
         $curlPost['billList'] = [
-            'appId'=> $this->appId,//应用 Id
-            'subAccountSid'=> $param['subAccountSid'],//子账户 ID
+            'appId' => $this->appId,//应用 Id
+            'subAccountSid' => $param['subAccountSid'],//子账户 ID
             'startTime' => $param['startTime'],//话单开始时间，格式:yyyymmddHHMMSS
-            'endTime'=> $param['endTime'],//话单结束时间，格式:yyyymmddHHMMSS， 要求 endTime 和 startTime 的差值不超过 7 天
-            'lastMaxId'=> $param['lastMaxId'],//上次返回话单中的 billId 最大值
-            'maxNumber'=> $param['maxNumber'],//本次调用返回的最大话单数，范围 1-500，默 认为 100
+            'endTime' => $param['endTime'],//话单结束时间，格式:yyyymmddHHMMSS， 要求 endTime 和 startTime 的差值不超过 7 天
+            'lastMaxId' => $param['lastMaxId'],//上次返回话单中的 billId 最大值
+            'maxNumber' => $param['maxNumber'],//本次调用返回的最大话单数，范围 1-500，默 认为 100
         ];
         $operation = 'Applications/billList';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 获取指定话单详情
-     * @param $callId=>呼叫Id
+     * @param $callId =>呼叫Id
      * @return mixed
      */
     public function callDetail($callId)
     {
         $curlPost['callDetail'] = [
-            'appId'=> $this->appId,//应用 Id
-            'callId'=> $callId,//呼叫 Id
+            'appId' => $this->appId,//应用 Id
+            'callId' => $callId,//呼叫 Id
         ];
         $operation = 'Applications/callDetail';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 获取通话录音文件下载 Url
-     * @param $callId=>呼叫Id
+     * @param $callId =>呼叫Id
      * @return mixed
      */
     public function callRecordUrl($callId)
     {
         $curlPost['callRecordUrl'] = [
-            'appId'=> $this->appId,//应用 Id
-            'callId'=> $callId,//呼叫 Id
+            'appId' => $this->appId,//应用 Id
+            'callId' => $callId,//呼叫 Id
         ];
         $operation = 'Applications/callRecordUrl';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 查询用户信息
-     * @param $phone=>用户绑定手机号(或其它号码) or 直线号码 二选一
+     * @param $phone =>用户绑定手机号(或其它号码) or 直线号码 二选一
      * @return mixed
      */
     public function queryUser($phone)
     {
         $curlPost['queryUser'] = [
-            'appId'=> $this->appId,//应用 Id
-            'callId'=> $phone,//用户绑定手机号(或其它号码)
+            'appId' => $this->appId,//应用 Id
+            'callId' => $phone,//用户绑定手机号(或其它号码)
         ];
         $operation = 'Applications/queryUser';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -265,19 +265,19 @@ class YiMiCloud
     public function addEnterprise($param)
     {
         $curlPost['addEnterprise'] = [
-            'appId'=> $this->appId,//应用 Id
-            'switchNumber'=> $param['switchNumber'],//云总机企业总机号码
-            'number'=> $param['number'],//云总机企业管理员用户名
-            'password'=> $param['password'],//云总机企业管理员密码
-            'chargeMode'=> $param['chargeMode'],//计费模式
-            'userData'=> $param['userData'],//用户私有数据，字母和数字的组合，最大长 读为 63。可用于通话状态推送鉴别
-            'callreqUrl'=> $param['callreqUrl'],//用户呼叫请求和鉴权服务器 Url。
+            'appId' => $this->appId,//应用 Id
+            'switchNumber' => $param['switchNumber'],//云总机企业总机号码
+            'number' => $param['number'],//云总机企业管理员用户名
+            'password' => $param['password'],//云总机企业管理员密码
+            'chargeMode' => $param['chargeMode'],//计费模式
+            'userData' => $param['userData'],//用户私有数据，字母和数字的组合，最大长 读为 63。可用于通话状态推送鉴别
+            'callreqUrl' => $param['callreqUrl'],//用户呼叫请求和鉴权服务器 Url。
         ];
         $operation = 'Enterprises/addEnterprise';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -287,14 +287,14 @@ class YiMiCloud
     public function dropEnterprise()
     {
         $curlPost['dropEnterprise'] = [
-            'appId'=> $this->appId,//应用 Id
+            'appId' => $this->appId,//应用 Id
         ];
         $operation = 'Enterprises/dropEnterprise';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -304,13 +304,13 @@ class YiMiCloud
     public function freeNumbers()
     {
         $curlPost['freeNumbers'] = [
-            'appId'=> $this->appId,//应用 Id
+            'appId' => $this->appId,//应用 Id
         ];
         $operation = 'Enterprises/freeNumbers';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -321,100 +321,100 @@ class YiMiCloud
     public function createUser($param)
     {
         $curlPost['createUser'] = [
-            'appId'=> $this->appId,//应用 Id
-            'workNumber'=> $param['workNumber'],//用户工号，与 phone 绑定，具有唯一性。如 果不使用工号，则可以为空
-            'phone'=> $param['phone'],//用户绑定电话号码，要求号码长度至少为 10 位，
-            'displayName'=> $param['displayName'],//用户显示名称
+            'appId' => $this->appId,//应用 Id
+            'workNumber' => $param['workNumber'],//用户工号，与 phone 绑定，具有唯一性。如 果不使用工号，则可以为空
+            'phone' => $param['phone'],//用户绑定电话号码，要求号码长度至少为 10 位，
+            'displayName' => $param['displayName'],//用户显示名称
 //            'directNumber'=> $param['directNumber'],//用户直线号码
 //            'callTime'=> $param['callTime'],//用户呼叫时间限制
-            'password'=> $param['password'],//用户密码
-            'number'=> $param['number'],//用户分机号
+            'password' => $param['password'],//用户密码
+            'number' => $param['number'],//用户分机号
         ];
         $operation = 'Enterprises/createUser';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 删除企业用户
-     * @param $phone=>用户绑定电话号码
+     * @param $phone =>用户绑定电话号码
      * @return mixed
      */
     public function dropUser($phone)
     {
         $curlPost['dropUser'] = [
-            'appId'=> $this->appId,//应用 Id
-            'phone'=> $phone//用户绑定电话号码
+            'appId' => $this->appId,//应用 Id
+            'phone' => $phone//用户绑定电话号码
         ];
         $operation = 'Enterprises/dropUser';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 更新企业用户信息
-     * @param $workNumber=>用户绑定工号
-     * @param $name=>用户显示名称
+     * @param $workNumber =>用户绑定工号
+     * @param $name =>用户显示名称
      * @return mixed
      */
-    public function updateUser($workNumber,$name)
+    public function updateUser($workNumber, $name)
     {
         $curlPost['updateUser'] = [
-            'appId'=> $this->appId,//应用 Id
-            'workNumber'=> $workNumber,//用户绑定工号，要求号码长度至少为 10 位，
-            'displayName'=> $name,//用户显示名称
+            'appId' => $this->appId,//应用 Id
+            'workNumber' => $workNumber,//用户绑定工号，要求号码长度至少为 10 位，
+            'displayName' => $name,//用户显示名称
 //            'directNumber'=> $param['directNumber'],//用户直线号码
 //            'callTime'=> $param['callTime'],//用户呼叫时间限制
         ];
         $operation = 'Enterprises/updateUser';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 更新企业用户密码
-     * @param $workNumber=>用户绑定工号
-     * @param $pass=>用户密码
+     * @param $workNumber =>用户绑定工号
+     * @param $pass =>用户密码
      * @return mixed
      */
-    public function updatePassword($workNumber,$pass)
+    public function updatePassword($workNumber, $pass)
     {
         $curlPost['updatePassword'] = [
-            'appId'=> $this->appId,//应用 Id
-            'workNumber'=> $workNumber,//用户绑定工号，要求号码长度至少为 10 位，
-            'password'=> $pass,//用户密码。
+            'appId' => $this->appId,//应用 Id
+            'workNumber' => $workNumber,//用户绑定工号，要求号码长度至少为 10 位，
+            'password' => $pass,//用户密码。
         ];
         $operation = 'Enterprises/updatePassword';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 更新企业用户绑定号码
-     * @param $workNumber=>用户绑定工号
-     * @param $phone=>用户绑定电话号码
+     * @param $workNumber =>用户绑定工号
+     * @param $phone =>用户绑定电话号码
      * @return mixed
      */
-    public function updateUserPhone($workNumber,$phone)
+    public function updateUserPhone($workNumber, $phone)
     {
         $curlPost['updateUserPhone'] = [
-            'appId'=> $this->appId,//应用 Id
-            'workNumber'=> $workNumber,//用户绑定工号
-            'phone'=> $phone,//用户绑定电话号码。
+            'appId' => $this->appId,//应用 Id
+            'workNumber' => $workNumber,//用户绑定工号
+            'phone' => $phone,//用户绑定电话号码。
         ];
         $operation = 'Enterprises/updateUserPhone';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -425,33 +425,33 @@ class YiMiCloud
     public function updateWorkNumber($param)
     {
         $curlPost['updateWorkNumber'] = [
-            'appId'=> $this->appId,//应用 Id
-            'number'=> $param['number'],//用户分机号
-            'workNumber'=> $param['workNumber'],//工号。
+            'appId' => $this->appId,//应用 Id
+            'number' => $param['number'],//用户分机号
+            'workNumber' => $param['workNumber'],//工号。
         ];
         $operation = 'Enterprises/updateWorkNumber';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 获取用户信息
-     * @param $phone=>用户绑定电话号码
+     * @param $phone =>用户绑定电话号码
      * @return mixed
      */
     public function userInfo($phone)
     {
         $curlPost['userInfo'] = [
-            'appId'=> $this->appId,//应用 Id
-            'phone'=> $phone,//用户绑定电话号码
+            'appId' => $this->appId,//应用 Id
+            'phone' => $phone,//用户绑定电话号码
         ];
         $operation = 'Enterprises/userInfo';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -461,49 +461,49 @@ class YiMiCloud
     public function getUserAmount()
     {
         $curlPost['getUserAmount'] = [
-            'appId'=> $this->appId,//应用 Id
+            'appId' => $this->appId,//应用 Id
         ];
         $operation = 'Enterprises/getUserAmount';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 创建技能组
-     * @param $groupName=>技能组名称
+     * @param $groupName =>技能组名称
      * @return mixed
      */
     public function createGroup($groupName)
     {
         $curlPost['createGroup'] = [
-            'appId'=> $this->appId,//应用 Id
-            'groupName'=> $groupName,//技能组名称
+            'appId' => $this->appId,//应用 Id
+            'groupName' => $groupName,//技能组名称
         ];
         $operation = 'Enterprises/createGroup';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 删除技能组
-     * @param $gid=>技能组 id
+     * @param $gid =>技能组 id
      * @return mixed
      */
     public function deleteGroup($gid)
     {
         $curlPost['deleteGroup'] = [
-            'appId'=> $this->appId,//应用 Id
-            'gid'=> $gid,//技能组名称
+            'appId' => $this->appId,//应用 Id
+            'gid' => $gid,//技能组名称
         ];
         $operation = 'Enterprises/deleteGroup';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -514,15 +514,15 @@ class YiMiCloud
     public function addGroupUser($param)
     {
         $curlPost['addGroupUser'] = [
-            'appId'=> $this->appId,//应用 Id
-            'gid'=> $param['gid'],//技能组名称
-            'phone'=> $param['phone'],//用户绑定号码
+            'appId' => $this->appId,//应用 Id
+            'gid' => $param['gid'],//技能组名称
+            'phone' => $param['phone'],//用户绑定号码
         ];
         $operation = 'Enterprises/addGroupUser';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -533,33 +533,33 @@ class YiMiCloud
     public function deleteGroupUser($param)
     {
         $curlPost['deleteGroupUser'] = [
-            'appId'=> $this->appId,//应用 Id
-            'gid'=> $param['gid'],//技能组名称
-            'phone'=> $param['phone'],//用户绑定号码
+            'appId' => $this->appId,//应用 Id
+            'gid' => $param['gid'],//技能组名称
+            'phone' => $param['phone'],//用户绑定号码
         ];
         $operation = 'Enterprises/deleteGroupUser';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 获取技能组用户
-     * @param $gid=>技能组 id
+     * @param $gid =>技能组 id
      * @return mixed
      */
     public function getGroupUsers($gid)
     {
         $curlPost['getGroupUsers'] = [
-            'appId'=> $this->appId,//应用 Id
-            'gid'=> $gid,//技能组名称
+            'appId' => $this->appId,//应用 Id
+            'gid' => $gid,//技能组名称
         ];
         $operation = 'Enterprises/getGroupUsers';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -570,17 +570,17 @@ class YiMiCloud
     public function addWorkTime($param)
     {
         $curlPost['addWorkTime'] = [
-            'appId'=> $this->appId,//应用 Id
+            'appId' => $this->appId,//应用 Id
             //(0-周日;1-周一;2-周二;3-周三; 4-周四;5-周五;6-周六)格式:用英文逗号隔开多个工作日，如 0,2,3
-            'week'=> $param['week'],
-            'startTime'=> $param['startTime'],//开始时间
-            'endTime'=> $param['endTime'],//结束时间
+            'week' => $param['week'],
+            'startTime' => $param['startTime'],//开始时间
+            'endTime' => $param['endTime'],//结束时间
         ];
         $operation = 'Enterprises/addWorkTime';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -591,15 +591,15 @@ class YiMiCloud
     public function deleteWorkTime($param)
     {
         $curlPost['deleteWorkTime'] = [
-            'appId'=> $this->appId,//应用 Id
-            'startTime'=> $param['startTime'],//开始时间
-            'endTime'=> $param['endTime'],//结束时间
+            'appId' => $this->appId,//应用 Id
+            'startTime' => $param['startTime'],//开始时间
+            'endTime' => $param['endTime'],//结束时间
         ];
         $operation = 'Enterprises/deleteWorkTime';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -610,34 +610,34 @@ class YiMiCloud
     public function createNumberPair($param)
     {
         $curlPost['createNumberPair'] = [
-            'appId'=> $this->appId,//应用 Id
-            'numberA'=> $param['numberA'],//用户号码 A
-            'numberB'=> $param['numberB'],//用户号码 B
-            'maxAge'=> $param['maxAge'],//生效时长(单位:秒，默认为 0，永久生效)
+            'appId' => $this->appId,//应用 Id
+            'numberA' => $param['numberA'],//用户号码 A
+            'numberB' => $param['numberB'],//用户号码 B
+            'maxAge' => $param['maxAge'],//生效时长(单位:秒，默认为 0，永久生效)
         ];
         $operation = 'Enterprises/createNumberPair';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 删除配对号码
-     * @param $numberPairId=>配对号码 Id
+     * @param $numberPairId =>配对号码 Id
      * @return mixed
      */
     public function dropNumberPair($numberPairId)
     {
         $curlPost['dropNumberPair'] = [
-            'appId'=> $this->appId,//应用 Id
-            'numberPairId'=> $numberPairId,//配对号码
+            'appId' => $this->appId,//应用 Id
+            'numberPairId' => $numberPairId,//配对号码
         ];
         $operation = 'Enterprises/dropNumberPair';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -652,14 +652,14 @@ class YiMiCloud
     public function addNumberPairList($numberPairList)
     {
         $curlPost['addNumberPairList'] = [
-            'appId'=> $this->appId,//应用 Id
-            'numberPairList'=> $numberPairList,//配对号码
+            'appId' => $this->appId,//应用 Id
+            'numberPairList' => $numberPairList,//配对号码
         ];
         $operation = 'Enterprises/addNumberPairList';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -670,14 +670,14 @@ class YiMiCloud
     public function getNumberPair($numberPairId)
     {
         $curlPost['getNumberPair'] = [
-            'appId'=> $this->appId,//应用 Id
-            'numberPairId'=> $numberPairId,//配对号码
+            'appId' => $this->appId,//应用 Id
+            'numberPairId' => $numberPairId,//配对号码
         ];
         $operation = 'Enterprises/getNumberPair';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -688,18 +688,18 @@ class YiMiCloud
     public function updateNumberPair($param)
     {
         $curlPost['updateNumberPair'] = [
-            'appId'=> $this->appId,//应用 Id
-            'numberPairId'=> $param['numberPairId'],//配对号码 Id(索引值)
-            'numberA'=> $param['numberA'],//用户号码 A
-            'numberB'=> $param['numberB'],//用户号码 B
-            'useNumber'=> $param['useNumber'],//总机号码
-            'maxAge'=> $param['maxAge'],//生效时长
+            'appId' => $this->appId,//应用 Id
+            'numberPairId' => $param['numberPairId'],//配对号码 Id(索引值)
+            'numberA' => $param['numberA'],//用户号码 A
+            'numberB' => $param['numberB'],//用户号码 B
+            'useNumber' => $param['useNumber'],//总机号码
+            'maxAge' => $param['maxAge'],//生效时长
         ];
         $operation = 'Enterprises/updateNumberPair';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -710,35 +710,35 @@ class YiMiCloud
     public function addVirtualNumber($param)
     {
         $curlPost['addVirtualNumber'] = [
-            'appId'=> $this->appId,//应用 Id
-            'useNumber'=> $param['useNumber'],//总机号码
-            'number'=> $param['number'],//分机号码
-            'phone'=> $param['phone'],//客户真实号码
-            'maxAge'=> $param['maxAge'],//生效时长(单位:秒，默认为 0，永久生效)
+            'appId' => $this->appId,//应用 Id
+            'useNumber' => $param['useNumber'],//总机号码
+            'number' => $param['number'],//分机号码
+            'phone' => $param['phone'],//客户真实号码
+            'maxAge' => $param['maxAge'],//生效时长(单位:秒，默认为 0，永久生效)
         ];
         $operation = 'Enterprises/addVirtualNumber';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 删除虚拟号码
-     * @param $virtualNumberId=>虚拟号码 Id
+     * @param $virtualNumberId =>虚拟号码 Id
      * @return mixed
      */
     public function dropVirtualNumber($virtualNumberId)
     {
         $curlPost['dropVirtualNumber'] = [
-            'appId'=> $this->appId,//应用 Id
-            'virtualNumberId'=> $virtualNumberId,//配对号码
+            'appId' => $this->appId,//应用 Id
+            'virtualNumberId' => $virtualNumberId,//配对号码
         ];
         $operation = 'Enterprises/dropVirtualNumber';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -754,14 +754,14 @@ class YiMiCloud
     public function addVirtualNumberList($virtualNumberList)
     {
         $curlPost['addVirtualNumberList'] = [
-            'appId'=> $this->appId,//应用 Id
-            'virtualNumberList'=> $virtualNumberList,//配对号码
+            'appId' => $this->appId,//应用 Id
+            'virtualNumberList' => $virtualNumberList,//配对号码
         ];
         $operation = 'Enterprises/addVirtualNumberList';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -772,14 +772,14 @@ class YiMiCloud
     public function getVirtualNumber($virtualNumberId)
     {
         $curlPost['getVirtualNumber'] = [
-            'appId'=> $this->appId,//应用 Id
-            'virtualNumberId'=> $virtualNumberId,//配对号码
+            'appId' => $this->appId,//应用 Id
+            'virtualNumberId' => $virtualNumberId,//配对号码
         ];
         $operation = 'Enterprises/getVirtualNumber';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -790,18 +790,18 @@ class YiMiCloud
     public function updateVirtualNumber($param)
     {
         $curlPost['updateVirtualNumber'] = [
-            'appId'=> $this->appId,//应用 Id
-            'virtualNumberId'=> $param['virtualNumberId'],//虚拟号码 Id(索引值)
-            'useNumber'=> $param['useNumber'],//总机号码
-            'number'=> $param['number'],//分机号码
-            'phone'=> $param['phone'],//用户号码
-            'maxAge'=> $param['maxAge'],//生效时长(单位:秒，默认为 0，永久生效)
+            'appId' => $this->appId,//应用 Id
+            'virtualNumberId' => $param['virtualNumberId'],//虚拟号码 Id(索引值)
+            'useNumber' => $param['useNumber'],//总机号码
+            'number' => $param['number'],//分机号码
+            'phone' => $param['phone'],//用户号码
+            'maxAge' => $param['maxAge'],//生效时长(单位:秒，默认为 0，永久生效)
         ];
         $operation = 'Enterprises/updateVirtualNumber';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -813,14 +813,14 @@ class YiMiCloud
     public function addServiceNumber($serviceNumber)
     {
         $curlPost['addServiceNumber'] = [
-            'appId'=> $this->appId,//应用 Id
-            'serviceNumber'=> $serviceNumber,//配对号码
+            'appId' => $this->appId,//应用 Id
+            'serviceNumber' => $serviceNumber,//配对号码
         ];
         $operation = 'Enterprises/addServiceNumber';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -832,14 +832,14 @@ class YiMiCloud
     public function delServiceNumber($serviceNumber)
     {
         $curlPost['delServiceNumber'] = [
-            'appId'=> $this->appId,//应用 Id
-            'serviceNumber'=> $serviceNumber,//配对号码
+            'appId' => $this->appId,//应用 Id
+            'serviceNumber' => $serviceNumber,//配对号码
         ];
         $operation = 'Enterprises/delServiceNumber';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -850,33 +850,33 @@ class YiMiCloud
     public function setSwitchNumber($param)
     {
         $curlPost['setSwitchNumber'] = [
-            'appId'=> $this->appId,//应用 Id
-            'switchNumber'=> $param['switchNumber'],//总机号码(M/N)
-            'type'=> $param['type'],//总机号码类型:0-呼入号码(M);1-呼出号 码(N)，默认为 1
+            'appId' => $this->appId,//应用 Id
+            'switchNumber' => $param['switchNumber'],//总机号码(M/N)
+            'type' => $param['type'],//总机号码类型:0-呼入号码(M);1-呼出号 码(N)，默认为 1
         ];
         $operation = 'Enterprises/setSwitchNumber';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 删除呼叫总机号码
-     * @param $switchNumber=>总机号码(M/N)
+     * @param $switchNumber =>总机号码(M/N)
      * @return mixed
      */
     public function delSwitchNumber($switchNumber)
     {
         $curlPost['delSwitchNumber'] = [
-            'appId'=> $this->appId,//应用 Id
-            'switchNumber'=> $switchNumber,//总机号码(M/N)
+            'appId' => $this->appId,//应用 Id
+            'switchNumber' => $switchNumber,//总机号码(M/N)
         ];
         $operation = 'Enterprises/delSwitchNumber';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -887,38 +887,38 @@ class YiMiCloud
     public function signIn($param)
     {
         $curlPost['signIn'] = [
-            'appId'=> $this->appId,//应用 Id
-            'workNumber'=> $param['workNumber'],//座席工号，
-            'gid'=> $param['gid'],//坐席所属技能组 id在座席属于多个技能组 的情况下，指定当前登录技能组
-            'type'=> $param['type'],//0-VOIP 模式或回拨话机(默认) 1-sip 话机
+            'appId' => $this->appId,//应用 Id
+            'workNumber' => $param['workNumber'],//座席工号，
+            'gid' => $param['gid'],//坐席所属技能组 id在座席属于多个技能组 的情况下，指定当前登录技能组
+            'type' => $param['type'],//0-VOIP 模式或回拨话机(默认) 1-sip 话机
             //type=0，如果座席使用回拨模式，此处输 入回拨话机的号码，话机号码必须是真实 的手机号、物联网卡号或固话号码;
             //type=0，如果座席使用 VoIP 模式，该参 数无需输入，或为空字符串
             //type=1，座席使用 sip 话机模式时，该参 数为 sip 话机号,
-            'deviceNumber'=> $param['deviceNumber'],//座席设备号码:取值范围 4-6 位数字 不能为空
+            'deviceNumber' => $param['deviceNumber'],//座席设备号码:取值范围 4-6 位数字 不能为空
         ];
         $operation = 'CallCenter/signIn';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 签出
-     * @param $workNumber=>座席工号
+     * @param $workNumber =>座席工号
      * @return mixed
      */
     public function signOff($workNumber)
     {
         $curlPost['signOff'] = [
-            'appId'=> $this->appId,//应用 Id
-            'workNumber'=> $workNumber,//座席工号，
+            'appId' => $this->appId,//应用 Id
+            'workNumber' => $workNumber,//座席工号，
         ];
         $operation = 'CallCenter/signOff';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -929,18 +929,18 @@ class YiMiCloud
     public function changeMode($param)
     {
         $curlPost['changeMode'] = [
-            'appId'=> $this->appId,//应用 Id
-            'workNumber'=> $param['workNumber'],//座席工号，
-            'mode'=> $param['mode'],//0-固定座席(默认值)，1-值班座席
+            'appId' => $this->appId,//应用 Id
+            'workNumber' => $param['workNumber'],//座席工号，
+            'mode' => $param['mode'],//0-固定座席(默认值)，1-值班座席
             //1) 座席使用回拨模式时，此处必须输入回 拨话机的号码，话机号码必须是真实的手 机号、物联网卡号或固话号码;
             //2) 座席使用 VoIP 模式时，该参数无需输入， 或为空字符串。
-            'deviceNumber'=> $param['deviceNumber'],//座席设备号码
+            'deviceNumber' => $param['deviceNumber'],//座席设备号码
         ];
         $operation = 'CallCenter/changeMode';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -951,15 +951,15 @@ class YiMiCloud
     public function changeStatus($param)
     {
         $curlPost['changeStatus'] = [
-            'appId'=> $this->appId,//应用 Id
-            'workNumber'=> $param['workNumber'],//座席工号，
-            'status'=> $param['status'],//0-示闲(默认);1-示忙;2-整理
+            'appId' => $this->appId,//应用 Id
+            'workNumber' => $param['workNumber'],//座席工号，
+            'status' => $param['status'],//0-示闲(默认);1-示忙;2-整理
         ];
         $operation = 'CallCenter/changeStatus';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -970,17 +970,17 @@ class YiMiCloud
     public function callOut($param)
     {
         $curlPost['callOut'] = [
-            'appId'=> $this->appId,//应用 Id
-            'workNumber'=> $param['workNumber'],//座席工号，
-            'outNumber'=> $param['outNumber'],//呼出用总机号码
-            'to'=> $param['to'],//客户号码
-            'userData'=> $param['userData'],//用户数据
+            'appId' => $this->appId,//应用 Id
+            'workNumber' => $param['workNumber'],//座席工号，
+            'outNumber' => $param['outNumber'],//呼出用总机号码
+            'to' => $param['to'],//客户号码
+            'userData' => $param['userData'],//用户数据
         ];
         $operation = 'CallCenter/callOut';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -991,15 +991,15 @@ class YiMiCloud
     public function callCancel($param)
     {
         $curlPost['callCancel'] = [
-            'appId'=> $this->appId,//应用 Id
-            'workNumber'=> $param['workNumber'],//座席工号，
-            'callId'=> $param['callId'],//呼叫 ID
+            'appId' => $this->appId,//应用 Id
+            'workNumber' => $param['workNumber'],//座席工号，
+            'callId' => $param['callId'],//呼叫 ID
         ];
         $operation = 'CallCenter/callCancel';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1010,17 +1010,17 @@ class YiMiCloud
     public function callTransfer($param)
     {
         $curlPost['callTransfer'] = [
-            'appId'=> $this->appId,//应用 Id
-            'workNumber'=> $param['workNumber'],//座席工号，
-            'callId'=> $param['callId'],//呼叫 ID
-            'toWorkNumber'=> $param['toWorkNumber'],//转移目标座席工号
-            'toGid'=> $param['toGid'],//转移目标座席所属技能组 id (在座席属于多 个技能组的情况下，指定一个技能组)
+            'appId' => $this->appId,//应用 Id
+            'workNumber' => $param['workNumber'],//座席工号，
+            'callId' => $param['callId'],//呼叫 ID
+            'toWorkNumber' => $param['toWorkNumber'],//转移目标座席工号
+            'toGid' => $param['toGid'],//转移目标座席所属技能组 id (在座席属于多 个技能组的情况下，指定一个技能组)
         ];
         $operation = 'CallCenter/callTransfer';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1031,15 +1031,15 @@ class YiMiCloud
     public function keepCall($param)
     {
         $curlPost['keepCall'] = [
-            'appId'=> $this->appId,//应用 Id
-            'workNumber'=> $param['workNumber'],//座席工号，
-            'callId'=> $param['callId'],//呼叫 ID
+            'appId' => $this->appId,//应用 Id
+            'workNumber' => $param['workNumber'],//座席工号，
+            'callId' => $param['callId'],//呼叫 ID
         ];
         $operation = 'CallCenter/keepCall';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1050,15 +1050,15 @@ class YiMiCloud
     public function resumeCall($param)
     {
         $curlPost['resumeCall'] = [
-            'appId'=> $this->appId,//应用 Id
-            'workNumber'=> $param['workNumber'],//座席工号，
-            'callId'=> $param['callId'],//呼叫 ID
+            'appId' => $this->appId,//应用 Id
+            'workNumber' => $param['workNumber'],//座席工号，
+            'callId' => $param['callId'],//呼叫 ID
         ];
         $operation = 'CallCenter/resumeCall';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1069,15 +1069,15 @@ class YiMiCloud
     public function callMonitor($param)
     {
         $curlPost['callMonitor'] = [
-            'appId'=> $this->appId,//应用 Id
-            'workNumber'=> $param['workNumber'],//班长座席工号，
-            'callId'=> $param['callId'],//呼叫 ID(该呼叫必须是本组座席的呼叫)
+            'appId' => $this->appId,//应用 Id
+            'workNumber' => $param['workNumber'],//班长座席工号，
+            'callId' => $param['callId'],//呼叫 ID(该呼叫必须是本组座席的呼叫)
         ];
         $operation = 'CallCenter/callMonitor';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1088,15 +1088,15 @@ class YiMiCloud
     public function callInsert($param)
     {
         $curlPost['callInsert'] = [
-            'appId'=> $this->appId,//应用 Id
-            'workNumber'=> $param['workNumber'],//班长座席工号，
-            'callId'=> $param['callId'],//呼叫 ID(该呼叫必须是本组座席的呼叫)
+            'appId' => $this->appId,//应用 Id
+            'workNumber' => $param['workNumber'],//班长座席工号，
+            'callId' => $param['callId'],//呼叫 ID(该呼叫必须是本组座席的呼叫)
         ];
         $operation = 'CallCenter/callInsert';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1110,32 +1110,32 @@ class YiMiCloud
     public function getCallGroupUsers($gid)
     {
         $curlPost['getGroupUsers'] = [
-            'appId'=> $this->appId,//应用 Id
-            'gid'=> $gid,//呼叫 ID(该呼叫必须是本组座席的呼叫)
+            'appId' => $this->appId,//应用 Id
+            'gid' => $gid,//呼叫 ID(该呼叫必须是本组座席的呼叫)
         ];
         $operation = 'CallCenter/getGroupUsers';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 获取座席状态
-     * @param $workNumber=>座席工号
+     * @param $workNumber =>座席工号
      * @return mixed
      */
     public function getUserState($workNumber)
     {
         $curlPost['getUserState'] = [
-            'appId'=> $this->appId,//应用 Id
-            'workNumber'=> $workNumber,//座席工号，
+            'appId' => $this->appId,//应用 Id
+            'workNumber' => $workNumber,//座席工号，
         ];
         $operation = 'CallCenter/getUserState';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1147,24 +1147,24 @@ class YiMiCloud
     public function callBack($param)
     {
         $curlPost['callBack'] = [
-            'appId'=> $this->appId,//应用 Id
-            'from'=> $param['from'],//主叫号码
-            'to'=> $param['to'],//被叫号码
+            'appId' => $this->appId,//应用 Id
+            'from' => $param['from'],//主叫号码
+            'to' => $param['to'],//被叫号码
             #0-显示总机固话号码(默认方式); 1-显示主叫号码(需运营商授权才可生效);
-            'displayMode'=> $param['displayMode'],//被叫来电号码显示方式
+            'displayMode' => $param['displayMode'],//被叫来电号码显示方式
             #0- 不开启按键反馈功能(默认方式) 1- 获取被叫按键反馈2- 获取主叫按键反馈3- 获取主叫、被叫按键反馈
-            'getFeedBack'=> $param['getFeedBack'],//通话过程中用户的按键反馈
+            'getFeedBack' => $param['getFeedBack'],//通话过程中用户的按键反馈
             #0– 一键模式(默认方式);1– 普通模式(按“#”键结束)
-            'feedBackMode'=> $param['feedBackMode'],//通话过程中用户按键方式
-            'keyRange'=> $param['keyRange'],//用户按键的有效范围，用逗号隔开字符。一键反馈模式下必须输入该参数
-            'callLimitTime'=> $param['callLimitTime'],//通话时长限制(单位:秒)，默认为 0(不限 时)
-            'userData'=> $param['userData'],//用户透传数据，回调时返回给用户，可用于 认证
+            'feedBackMode' => $param['feedBackMode'],//通话过程中用户按键方式
+            'keyRange' => $param['keyRange'],//用户按键的有效范围，用逗号隔开字符。一键反馈模式下必须输入该参数
+            'callLimitTime' => $param['callLimitTime'],//通话时长限制(单位:秒)，默认为 0(不限 时)
+            'userData' => $param['userData'],//用户透传数据，回调时返回给用户，可用于 认证
         ];
         $operation = 'Calls/callBack';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1176,16 +1176,16 @@ class YiMiCloud
     public function directCall($param)
     {
         $curlPost['directCall'] = [
-            'appId'=> $this->appId,//应用 Id
-            'from'=> $param['from'],//主叫号码
-            'to'=> $param['to'],//被叫号码
-            'userData'=> $param['userData'],//用户透传数据，回调时返回给用户，可用于 认证
+            'appId' => $this->appId,//应用 Id
+            'from' => $param['from'],//主叫号码
+            'to' => $param['to'],//被叫号码
+            'userData' => $param['userData'],//用户透传数据，回调时返回给用户，可用于 认证
         ];
         $operation = 'Calls/directCall';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1197,16 +1197,16 @@ class YiMiCloud
     public function voiceCode($param)
     {
         $curlPost['voiceCode'] = [
-            'appId'=> $this->appId,//应用 Id
-            'verifyCode'=> $param['verifyCode'],//验证号码，现规定为 4~8 位数字
-            'to'=> $param['to'],//验证码拨叫号码
-            'userData'=> $param['userData'],//用户透传数据，回调时返回给用户，可用于 认证
+            'appId' => $this->appId,//应用 Id
+            'verifyCode' => $param['verifyCode'],//验证号码，现规定为 4~8 位数字
+            'to' => $param['to'],//验证码拨叫号码
+            'userData' => $param['userData'],//用户透传数据，回调时返回给用户，可用于 认证
         ];
         $operation = 'Calls/voiceCode';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1218,28 +1218,28 @@ class YiMiCloud
     public function voiceNotify($param)
     {
         $curlPost['voiceNotify'] = [
-            'appId'=> $this->appId,//应用 Id
-            'voiceId'=> $param['verifyCode'],//验语音文件 Id，上传文件后返回
+            'appId' => $this->appId,//应用 Id
+            'voiceId' => $param['verifyCode'],//验语音文件 Id，上传文件后返回
             #1) 被叫号码最多可以有 500 个;2) 号码之间用英文字符“,”隔开;3) 号码不可重复，否则直接返回错误。
-            'to'=> $param['to'],//语音通知被叫号码
+            'to' => $param['to'],//语音通知被叫号码
             #1) 多个变量之间用英文字符“,”隔开; 2) 变量数必须与模板变量数一致;3) 如果被叫号码不止一个，则:a)
             #如果所有号码的播放内容相同，则使 用同一组变量;b) 如果多个号码播放内容不一致，则必 须使用多组变量，
             #每组变量之间用英 文字母“;”隔开，且变量组数必须与 被叫号码数相等。
-            'content'=> $param['content'],//语音文本模板变量内容(使用语音文本模板 时必须输入)
+            'content' => $param['content'],//语音文本模板变量内容(使用语音文本模板 时必须输入)
             #0- 不开启按键反馈功能(默认方式) 1- 获取被叫按键反馈
-            'getFeedBack'=> $param['getFeedBack'],//通话过程中用户的按键反馈:
+            'getFeedBack' => $param['getFeedBack'],//通话过程中用户的按键反馈:
             #0– 一键模式(默认方式);1– 普通模式(按“#”键结束)
-            'feedBackMode'=> $param['feedBackMode'],//通话过程中用户按键方式:
-            'keyRange'=> $param['keyRange'],//一键反馈模式下，用户按键的有效范围，用 逗号隔开字符。默认情况下按键范围为所有 数字以及*和#。
-            'repeatTimes'=> $param['repeatTimes'],//按键输入错误，并􏰀示重新输入的次数，默 认为 3 次，有效范围:0-5
-            'keyWaitTime'=> $param['keyWaitTime'],//等待按键输入的时间，默认为 8 秒，有效范 围为 5-20s
-            'userData'=> $param['userData'],//用户透传数据，回调时返回给用户，可用于 认证
+            'feedBackMode' => $param['feedBackMode'],//通话过程中用户按键方式:
+            'keyRange' => $param['keyRange'],//一键反馈模式下，用户按键的有效范围，用 逗号隔开字符。默认情况下按键范围为所有 数字以及*和#。
+            'repeatTimes' => $param['repeatTimes'],//按键输入错误，并􏰀示重新输入的次数，默 认为 3 次，有效范围:0-5
+            'keyWaitTime' => $param['keyWaitTime'],//等待按键输入的时间，默认为 8 秒，有效范 围为 5-20s
+            'userData' => $param['userData'],//用户透传数据，回调时返回给用户，可用于 认证
         ];
         $operation = 'Calls/voiceNotify';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1252,43 +1252,43 @@ class YiMiCloud
     public function callBacks($param)
     {
         $curlPost['callBack'] = [
-            'appId'=> $this->appId,//应用 Id
-            'from'=> $param['from'],//主叫号码
-            'to'=> $param['to'],//被叫号码 可以是多个号码每个号码之间用逗号隔开。
+            'appId' => $this->appId,//应用 Id
+            'from' => $param['from'],//主叫号码
+            'to' => $param['to'],//被叫号码 可以是多个号码每个号码之间用逗号隔开。
             #0-显示总机固话号码(默认方式); 1-显示主叫号码(需运营商授权才可生效);
-            'displayMode'=> $param['displayMode'],//被叫来电号码显示方式
+            'displayMode' => $param['displayMode'],//被叫来电号码显示方式
             #0- 不开启按键反馈功能(默认方式) 1- 获取被叫按键反馈2- 获取主叫按键反馈3- 获取主叫、被叫按键反馈
-            'getFeedBack'=> $param['getFeedBack'],//通话过程中用户的按键反馈
+            'getFeedBack' => $param['getFeedBack'],//通话过程中用户的按键反馈
             #0– 一键模式(默认方式);1– 普通模式(按“#”键结束)
-            'feedBackMode'=> $param['feedBackMode'],//通话过程中用户按键方式
-            'keyRange'=> $param['keyRange'],//用户按键的有效范围，用逗号隔开字符。一键反馈模式下必须输入该参数
-            'callLimitTime'=> $param['callLimitTime'],//通话时长限制(单位:秒)，默认为 0(不限 时)
-            'userData'=> $param['userData'],//用户透传数据，回调时返回给用户，可用于 认证
+            'feedBackMode' => $param['feedBackMode'],//通话过程中用户按键方式
+            'keyRange' => $param['keyRange'],//用户按键的有效范围，用逗号隔开字符。一键反馈模式下必须输入该参数
+            'callLimitTime' => $param['callLimitTime'],//通话时长限制(单位:秒)，默认为 0(不限 时)
+            'userData' => $param['userData'],//用户透传数据，回调时返回给用户，可用于 认证
         ];
         $operation = 'Calls/callBack';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 通话取消功能
      * 传递子账号则请求子账号 传递主账号则请求主账号
-     * @param $callId=>呼叫 Id
+     * @param $callId =>呼叫 Id
      * @return mixed
      */
     public function callsCallCancel($callId)
     {
         $curlPost['callCancel'] = [
-            'appId'=> $this->appId,//应用 Id
-            'callId'=> $callId,//呼叫 Id，
+            'appId' => $this->appId,//应用 Id
+            'callId' => $callId,//呼叫 Id，
         ];
         $operation = 'Calls/callCancel';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1302,9 +1302,9 @@ class YiMiCloud
         ];
         $operation = 'Voice/uploadVoice';
 
-        $data = $this->fileRequest($operation,$curlPost);
+        $data = $this->fileRequest($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1315,14 +1315,14 @@ class YiMiCloud
     public function deleteVoice($voiceId)
     {
         $curlPost['callCancel'] = [
-            'appId'=> $this->appId,//应用 Id
-            'voiceId'=> $voiceId,//呼叫 Id，
+            'appId' => $this->appId,//应用 Id
+            'voiceId' => $voiceId,//呼叫 Id，
         ];
         $operation = 'Voice/deleteVoice';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1333,33 +1333,33 @@ class YiMiCloud
     public function uploadText($param)
     {
         $curlPost['uploadText'] = [
-            'appId'=> $this->appId,//应用 Id
-            'text'=> $param['text'],//语音文本或模板，汉字采用 UTF-8 编码，长 度默认为 500(字节数)。最大长度可以在后 台配置(应用相关)。
-            'maxAge'=> $param['maxAge'],//最大生效时间(单位为秒，默认为 1800s)， 如果为 0，则永久生效。
+            'appId' => $this->appId,//应用 Id
+            'text' => $param['text'],//语音文本或模板，汉字采用 UTF-8 编码，长 度默认为 500(字节数)。最大长度可以在后 台配置(应用相关)。
+            'maxAge' => $param['maxAge'],//最大生效时间(单位为秒，默认为 1800s)， 如果为 0，则永久生效。
         ];
         $operation = 'Voice/uploadText';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 删除语音文本
-     * @param $textId=>语音文本 Id
+     * @param $textId =>语音文本 Id
      * @return mixed
      */
     public function deleteText($textId)
     {
         $curlPost['deleteText'] = [
-            'appId'=> $this->appId,//应用 Id
-            'textId'=> $textId,//语音文本 Id
+            'appId' => $this->appId,//应用 Id
+            'textId' => $textId,//语音文本 Id
         ];
         $operation = 'Voice/deleteText';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1370,33 +1370,33 @@ class YiMiCloud
     public function addSmsSig($param)
     {
         $curlPost['addSmsSig'] = [
-            'appId'=> $this->appId,//应用 Id
-            'signature'=> $param['signature'],//短信签名，3-8 字符，utf-8 编码
-            'type'=> $param['type'],//签名类型:0-普通签名;1-验证码签名
+            'appId' => $this->appId,//应用 Id
+            'signature' => $param['signature'],//短信签名，3-8 字符，utf-8 编码
+            'type' => $param['type'],//签名类型:0-普通签名;1-验证码签名
         ];
         $operation = 'Sms/addSmsSig';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 删除短信签名
-     * @param $signatureId=>签名 Id
+     * @param $signatureId =>签名 Id
      * @return mixed
      */
     public function delSmsSig($signatureId)
     {
         $curlPost['delSmsSig'] = [
-            'appId'=> $this->appId,//应用 Id
-            'signatureId'=> $signatureId,//签名 Id，
+            'appId' => $this->appId,//应用 Id
+            'signatureId' => $signatureId,//签名 Id，
         ];
         $operation = 'Sms/delSmsSig';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1407,36 +1407,36 @@ class YiMiCloud
     public function addSmsTempl($param)
     {
         $curlPost['addSmsTempl'] = [
-            'appId'=> $this->appId,//应用 Id
-            'type'=> $param['type'],//模板类型:0-普通模板，1-验证码模板
-            'textType'=> $param['textType'],//模板文字类型:0-纯文本模板(默认)1-带参数模板(验证码模板必须带参数{vc})
-            'templText'=> $param['templText'],//模板内容:UTF-8 编码字符;
-            'signatureId'=> $param['signatureId'],//签名 Id
+            'appId' => $this->appId,//应用 Id
+            'type' => $param['type'],//模板类型:0-普通模板，1-验证码模板
+            'textType' => $param['textType'],//模板文字类型:0-纯文本模板(默认)1-带参数模板(验证码模板必须带参数{vc})
+            'templText' => $param['templText'],//模板内容:UTF-8 编码字符;
+            'signatureId' => $param['signatureId'],//签名 Id
 
         ];
         $operation = 'Sms/addSmsTempl';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 删除短信模板
-     * @param $templateId=>签名id
+     * @param $templateId =>签名id
      * @return mixed
      */
     public function delSmsTempl($templateId)
     {
         $curlPost['delSmsTempl'] = [
-            'appId'=> $this->appId,//应用 Id
-            '$templateId'=> $templateId,//签名 Id，
+            'appId' => $this->appId,//应用 Id
+            '$templateId' => $templateId,//签名 Id，
         ];
         $operation = 'Sms/delSmsTempl';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1447,15 +1447,15 @@ class YiMiCloud
     public function bindSmsSig($param)
     {
         $curlPost['bindSmsSig'] = [
-            'appId'=> $this->appId,//应用 Id
-            'templateId'=> $param['templateId'],//模板 Id
-            'signatureId'=> $param['signatureId'],//签名 Id
+            'appId' => $this->appId,//应用 Id
+            'templateId' => $param['templateId'],//模板 Id
+            'signatureId' => $param['signatureId'],//签名 Id
         ];
         $operation = 'Sms/bindSmsSig';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1466,15 +1466,15 @@ class YiMiCloud
     public function unbindSmsSig($param)
     {
         $curlPost['unbindSmsSig'] = [
-            'appId'=> $this->appId,//应用 Id
-            'templateId'=> $param['templateId'],//模板 Id
-            'signatureId'=> $param['signatureId'],//签名 Id
+            'appId' => $this->appId,//应用 Id
+            'templateId' => $param['templateId'],//模板 Id
+            'signatureId' => $param['signatureId'],//签名 Id
         ];
         $operation = 'Sms/unbindSmsSig';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1485,19 +1485,19 @@ class YiMiCloud
     public function smsNotify($param)
     {
         $curlPost['smsNotify'] = [
-            'appId'=> $this->appId,//应用 Id
-            'templateId'=> $param['templateId'],//模板 Id
-            'signatureId'=> $param['signatureId'],//签名 Id
+            'appId' => $this->appId,//应用 Id
+            'templateId' => $param['templateId'],//模板 Id
+            'signatureId' => $param['signatureId'],//签名 Id
             #多个号码用英文逗号 隔开，逗号两侧不要添加空格，号码数量最 多为 10 个。
-            'to'=> $param['to'],//短信通知的接收号码，
+            'to' => $param['to'],//短信通知的接收号码，
             #匹配短信模板的参数,以逗号隔开(加上模板 长度不要超出 500 字符;参数个数必须与模 板匹配)
-            'content'=> $param['content'],//匹配短信模板的参数
+            'content' => $param['content'],//匹配短信模板的参数
         ];
         $operation = 'Sms/smsNotify';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1508,20 +1508,20 @@ class YiMiCloud
     public function smsVerifyCode($param)
     {
         $curlPost['smsVerifyCode'] = [
-            'appId'=> $this->appId,//应用 Id
-            'templateId'=> $param['templateId'],//模板 Id
-            'signatureId'=> $param['signatureId'],//签名 Id
+            'appId' => $this->appId,//应用 Id
+            'templateId' => $param['templateId'],//模板 Id
+            'signatureId' => $param['signatureId'],//签名 Id
             #多个号码用英文逗号 隔开，逗号两侧不要添加空格，号码数量最 多为 10 个。
-            'to'=> $param['to'],//短信通知的接收号码
+            'to' => $param['to'],//短信通知的接收号码
             #匹配短信模板的参数,以逗号隔开(加上模板 长度不要超出 500 字符;参数个数必须与模板匹配)
-            'content'=> $param['content'],//匹配短信模板的参数
-            'verifyCode'=> $param['verifyCode'],//验证码参数，4-8 位数字,
+            'content' => $param['content'],//匹配短信模板的参数
+            'verifyCode' => $param['verifyCode'],//验证码参数，4-8 位数字,
         ];
         $operation = 'Sms/smsNotify';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1532,23 +1532,23 @@ class YiMiCloud
     public function createTask($param)
     {
         $curlPost['createTask'] = [
-            'appId'=> $this->appId,//应用 Id
-            'name'=> $param['name'],//任务名称
+            'appId' => $this->appId,//应用 Id
+            'name' => $param['name'],//任务名称
             #多个请使用英文逗号隔开(自动去重处理)上限为 100 个
-            'workNumbers'=> $param['workNumbers'],//坐席工号
+            'workNumbers' => $param['workNumbers'],//坐席工号
             #0.8~1.2，保留小数点后一位
-            'callRate'=> $param['callRate'],//外呼速率默认 0.8
+            'callRate' => $param['callRate'],//外呼速率默认 0.8
             #和外呼结束时间搭配使用，表示同一天内的 允许批量外呼的时间段，不得早于结束时间不得早于 08:00，格式例:09:30 默认:08:00
-            'preStartTime'=> $param['preStartTime'],//预设外呼开始时间
+            'preStartTime' => $param['preStartTime'],//预设外呼开始时间
             #和外呼结束时间搭配使用，表示同一天内的 允许批量外呼的时间段，不得晚于开始时间不得晚于 20:00，格式例:09:30 默认:20:00
-            'preEndTime'=> $param['preEndTime'],//预设外呼结束时间
-            'autoAnswer'=> $param['autoAnswer'],//是否自动接听 0-关闭(默认)，1-开启
+            'preEndTime' => $param['preEndTime'],//预设外呼结束时间
+            'autoAnswer' => $param['autoAnswer'],//是否自动接听 0-关闭(默认)，1-开启
         ];
         $operation = 'BatchCalls/createTask';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1559,14 +1559,14 @@ class YiMiCloud
     public function deleteTask($taskId)
     {
         $curlPost['deleteTask'] = [
-            'appId'=> $this->appId,//应用 Id
-            'taskId'=> $taskId,//任务 Id
+            'appId' => $this->appId,//应用 Id
+            'taskId' => $taskId,//任务 Id
         ];
         $operation = 'BatchCalls/deleteTask';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1577,24 +1577,24 @@ class YiMiCloud
     public function updateTask($param)
     {
         $curlPost['updateTask'] = [
-            'appId'=> $this->appId,//应用 Id
-            'name'=> $param['name'],//任务名称
-            'taskId'=> $param['taskId'],//任务 Id
+            'appId' => $this->appId,//应用 Id
+            'name' => $param['name'],//任务名称
+            'taskId' => $param['taskId'],//任务 Id
             #多个请使用英文逗号隔开(自动去重处理)上限为 100 个
-            'workNumbers'=> $param['workNumbers'],//坐席工号
+            'workNumbers' => $param['workNumbers'],//坐席工号
             #0.8~1.2，保留小数点后一位
-            'callRate'=> $param['callRate'],//外呼速率默认 0.8
+            'callRate' => $param['callRate'],//外呼速率默认 0.8
             #和外呼结束时间搭配使用，表示同一天内的 允许批量外呼的时间段，不得早于结束时间不得早于 08:00，格式例:09:30 默认:08:00
-            'preStartTime'=> $param['preStartTime'],//预设外呼开始时间
+            'preStartTime' => $param['preStartTime'],//预设外呼开始时间
             #和外呼结束时间搭配使用，表示同一天内的 允许批量外呼的时间段，不得晚于开始时间不得晚于 20:00，格式例:09:30 默认:20:00
-            'preEndTime'=> $param['preEndTime'],//预设外呼结束时间
-            'autoAnswer'=> $param['autoAnswer'],//是否自动接听 0-关闭(默认)，1-开启
+            'preEndTime' => $param['preEndTime'],//预设外呼结束时间
+            'autoAnswer' => $param['autoAnswer'],//是否自动接听 0-关闭(默认)，1-开启
         ];
         $operation = 'BatchCalls/updateTask';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1605,16 +1605,16 @@ class YiMiCloud
     public function addNewBatch($param)
     {
         $curlPost['addNewBatch'] = [
-            'appId'=> $this->appId,//应用 Id
-            'taskId'=> $param['taskId'],//任务 Id
+            'appId' => $this->appId,//应用 Id
+            'taskId' => $param['taskId'],//任务 Id
             #2W 条为上限 同一任务的重复任务号码自动去重
-            'tels'=> $param['tels'],//任务号码 多个请使用英文逗号隔开
+            'tels' => $param['tels'],//任务号码 多个请使用英文逗号隔开
         ];
         $operation = 'BatchCalls/addNewBatch';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1625,15 +1625,15 @@ class YiMiCloud
     public function getBatchStatus($param)
     {
         $curlPost['getBatchStatus'] = [
-            'appId'=> $this->appId,//应用 Id
-            'taskId'=> $param['taskId'],//任务 Id
-            'batchId'=> $param['batchId'],//批次 Id
+            'appId' => $this->appId,//应用 Id
+            'taskId' => $param['taskId'],//任务 Id
+            'batchId' => $param['batchId'],//批次 Id
         ];
         $operation = 'BatchCalls/getBatchStatus';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1644,17 +1644,17 @@ class YiMiCloud
     public function deleteBatchTels($param)
     {
         $curlPost['deleteBatchTels'] = [
-            'appId'=> $this->appId,//应用 Id
-            'taskId'=> $param['taskId'],//任务 Id
-            'batchId'=> $param['batchId'],//批次 Id
+            'appId' => $this->appId,//应用 Id
+            'taskId' => $param['taskId'],//任务 Id
+            'batchId' => $param['batchId'],//批次 Id
             #多个请使用英文逗号隔开 2W 条为上限
-            'tels'=> $param['tels'],//任务号码
+            'tels' => $param['tels'],//任务号码
         ];
         $operation = 'BatchCalls/deleteBatchTels';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1665,109 +1665,109 @@ class YiMiCloud
     public function getBatchTels($param)
     {
         $curlPost['getBatchTels'] = [
-            'appId'=> $this->appId,//应用 Id
-            'taskId'=> $param['taskId'],//任务 Id
-            'batchId'=> $param['batchId'],//批次 Id
+            'appId' => $this->appId,//应用 Id
+            'taskId' => $param['taskId'],//任务 Id
+            'batchId' => $param['batchId'],//批次 Id
             #1-1000 的正整数 默认 10
-            'limit'=> $param['limit'],//调用一次接口最多可以获取的任务号码数目
+            'limit' => $param['limit'],//调用一次接口最多可以获取的任务号码数目
             #默认 0
-            'offset'=> $param['offset'],//从第几条开始(按任务号码添加的顺序查询)
+            'offset' => $param['offset'],//从第几条开始(按任务号码添加的顺序查询)
         ];
         $operation = 'BatchCalls/getBatchTels';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      *启动外呼任务
-     * @param $taskId=>任务 Id
+     * @param $taskId =>任务 Id
      * @return mixed
      */
     public function startTask($taskId)
     {
         $curlPost['startTask'] = [
-            'appId'=> $this->appId,//应用 Id
-            'taskId'=> $taskId,//任务 Id
+            'appId' => $this->appId,//应用 Id
+            'taskId' => $taskId,//任务 Id
         ];
         $operation = 'BatchCalls/startTask';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 暂停外呼任务
-     * @param $taskId=>任务 Id
+     * @param $taskId =>任务 Id
      * @return mixed
      */
     public function pauseTask($taskId)
     {
         $curlPost['pauseTask'] = [
-            'appId'=> $this->appId,//应用 Id
-            'taskId'=> $taskId,//任务 Id
+            'appId' => $this->appId,//应用 Id
+            'taskId' => $taskId,//任务 Id
         ];
         $operation = 'BatchCalls/pauseTask';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 结束外呼任务
-     * @param $taskId=>任务 Id
+     * @param $taskId =>任务 Id
      * @return mixed
      */
     public function stopTask($taskId)
     {
         $curlPost['stopTask'] = [
-            'appId'=> $this->appId,//应用 Id
-            'taskId'=> $taskId,//任务 Id
+            'appId' => $this->appId,//应用 Id
+            'taskId' => $taskId,//任务 Id
         ];
         $operation = 'BatchCalls/stopTask';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 监控外呼任务
-     * @param $taskId=>任务 Id
+     * @param $taskId =>任务 Id
      * @return mixed
      */
     public function monitorTask($taskId)
     {
         $curlPost['monitorTask'] = [
-            'appId'=> $this->appId,//应用 Id
-            'taskId'=> $taskId,//任务 Id
+            'appId' => $this->appId,//应用 Id
+            'taskId' => $taskId,//任务 Id
         ];
         $operation = 'BatchCalls/monitorTask';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 获取外呼任务信息
-     * @param $taskId=>任务 Id
+     * @param $taskId =>任务 Id
      * @return mixed
      */
     public function getTaskInfo($taskId)
     {
         $curlPost['getTaskInfo'] = [
-            'appId'=> $this->appId,//应用 Id
-            'taskId'=> $taskId,//任务 Id
+            'appId' => $this->appId,//应用 Id
+            'taskId' => $taskId,//任务 Id
         ];
         $operation = 'BatchCalls/getTaskInfo';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1778,21 +1778,21 @@ class YiMiCloud
     public function getTaskList($param)
     {
         $curlPost['getTaskList'] = [
-            'appId'=> $this->appId,//应用 Id
+            'appId' => $this->appId,//应用 Id
             #0-未开始 1-正在进行 2-暂停 4-已完成 5- 已逾期 6-企业为关闭状态
-            'status'=> $param['status'],//任务状态
+            'status' => $param['status'],//任务状态
             #格式:yyyymmddHHMMSS必选和结束时间一起使用 开始时间不能晚于结 束时间开始时间<=批次创建时间<=结束时间
-            'startTime'=> $param['startTime'],//开始时间，用于任务创建时间的筛选
+            'startTime' => $param['startTime'],//开始时间，用于任务创建时间的筛选
             #格式:yyyymmddHHMMSS和开时时间一起使用 开始时间不能晚于结 束时间开始时间<=批次创建时间<=结束时间
-            'endTime'=> $param['endTime'],//结束时间，用于任务创建时间的筛选
+            'endTime' => $param['endTime'],//结束时间，用于任务创建时间的筛选
             #取值范围 1-1000默认 100
-            'maxNumber'=> $param['maxNumber'],//调用一次接口最多可获得的列表条数
+            'maxNumber' => $param['maxNumber'],//调用一次接口最多可获得的列表条数
         ];
         $operation = 'BatchCalls/getTaskList';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1803,15 +1803,15 @@ class YiMiCloud
     public function getBatchInfo($param)
     {
         $curlPost['getBatchInfo'] = [
-            'appId'=> $this->appId,//应用 Id
-            'taskId'=> $param['taskId'],//任务 Id
-            'batchId'=> $param['batchId'],//批次 Id
+            'appId' => $this->appId,//应用 Id
+            'taskId' => $param['taskId'],//任务 Id
+            'batchId' => $param['batchId'],//批次 Id
         ];
         $operation = 'BatchCalls/getBatchInfo';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
@@ -1822,84 +1822,84 @@ class YiMiCloud
     public function getBatchList($param)
     {
         $curlPost['getBatchList'] = [
-            'appId'=> $this->appId,//应用 Id
-            'taskId'=> $param['taskId'],//任务 Id
+            'appId' => $this->appId,//应用 Id
+            'taskId' => $param['taskId'],//任务 Id
             #0-未开始(导入成功) 1-正在进行 2-暂停 4-已完成 5-已逾期 6-企业为关闭状态 7- 正在导入 8-导入失败
-            'status'=> $param['status'],//任务状态:
+            'status' => $param['status'],//任务状态:
             #格式:yyyymmddHHMMSS必选和结束时间一起使用 开始时间不能晚于结 束时间开始时间<=批次创建时间<=结束时间
-            'startTime'=> $param['startTime'],//开始时间，用于批次创建时间的筛选
+            'startTime' => $param['startTime'],//开始时间，用于批次创建时间的筛选
             #格式:yyyymmddHHMMSS和开时时间一起使用 开始时间不能晚于结 束时间开始时间<=批次创建时间<=结束时间
-            'endTime'=> $param['endTime'],//结束时间，用于批次创建时间的筛选
-            'maxNumber'=> $param['maxNumber'],//调用一次接口最多可获得的列表条数取值范围 1-1000默认 100
+            'endTime' => $param['endTime'],//结束时间，用于批次创建时间的筛选
+            'maxNumber' => $param['maxNumber'],//调用一次接口最多可获得的列表条数取值范围 1-1000默认 100
         ];
         $operation = 'BatchCalls/getBatchList';
 
-        $data = $this->requestParam($operation,$curlPost);
+        $data = $this->requestParam($operation, $curlPost);
 
-        return json_decode($data,true);
+        return json_decode($data, true);
     }
 
     /**
      * 提交内容
-     * @param $operation=>请求的业务操作
-     * @param $curlPost=>传输数据 array
+     * @param $operation =>请求的业务操作
+     * @param $curlPost =>传输数据 array
      * @return mixed
      */
-    public function requestParam($operation,$curlPost)
+    public function requestParam($operation, $curlPost)
     {
-        $postUrl = 'http://'.$this->url.'/'.$this->softwareVersion.'/'.
-            $this->accounts.'/'.$this->accountSid.'/'.$operation.'?sig='.$this->sigParameter;
+        $postUrl = 'http://' . $this->url . '/' . $this->softwareVersion . '/' .
+            $this->accounts . '/' . $this->accountSid . '/' . $operation . '?sig=' . $this->sigParameter;
         $curlPost = json_encode($curlPost);
         $number = strlen($curlPost);
         $headerArray = [
-            'Host:'.$this->url,
+            'Host:' . $this->url,
             'Content-Type:application/json;charset=utf-8',//包体内容封装格式 json
             'Accept:application/json',//云总机号码保护配置接口 json
-            'Content-Length:'.$number,//Http 净荷数据长度
-            'Authorization:'.$this->authorization//验证信息
+            'Content-Length:' . $number,//Http 净荷数据长度
+            'Authorization:' . $this->authorization//验证信息
         ];
 
-        return $this->postUrl($postUrl,$headerArray,$curlPost);
+        return $this->postUrl($postUrl, $headerArray, $curlPost);
     }
 
     /**
      * 文件上传提交内容
-     * @param $operation=>请求的业务操作
-     * @param $curlPost=>传输数据 array
-     * @param $maxAge=>传输时间 默认1800
+     * @param $operation =>请求的业务操作
+     * @param $curlPost =>传输数据 array
+     * @param $maxAge =>传输时间 默认1800
      * @return mixed
      */
-    public function fileRequest($operation,$curlPost,$maxAge=1800)
+    public function fileRequest($operation, $curlPost, $maxAge = 1800)
     {
-        $postUrl = 'http://'.$this->url.'/'.$this->softwareVersion.'/'.$this->accounts.'/'.
-            $this->accountSid.'/'.$operation.'?sig='.$this->sigParameter.'&appId='.$this->appId.'f&maxAge='.$maxAge;
+        $postUrl = 'http://' . $this->url . '/' . $this->softwareVersion . '/' . $this->accounts . '/' .
+            $this->accountSid . '/' . $operation . '?sig=' . $this->sigParameter . '&appId=' . $this->appId . 'f&maxAge=' . $maxAge;
         $curlPost = json_encode($curlPost);
         $number = strlen($curlPost);
         $headerArray = [
-            'Host:'.$this->url,
+            'Host:' . $this->url,
             'Content-Type: application/octet-stream',//包体内容封装格式 json
             'Accept:application/json',//云总机号码保护配置接口 json
-            'Content-Length:'.$number,//Http 净荷数据长度
-            'Authorization:'.$this->authorization//验证信息
+            'Content-Length:' . $number,//Http 净荷数据长度
+            'Authorization:' . $this->authorization//验证信息
         ];
 
-        return $this->postUrl($postUrl,$headerArray,$curlPost);
+        return $this->postUrl($postUrl, $headerArray, $curlPost);
     }
 
     /**
      * curl post传输
-     * @param $postUrl=>请求地址
-     * @param $headerArray=>请求head
-     * @param $curlPost=>传输数据 array
+     * @param $postUrl =>请求地址
+     * @param $headerArray =>请求head
+     * @param $curlPost =>传输数据 array
      * @return mixed
      *
      */
-    public function postUrl($postUrl,$headerArray,$curlPost)
+    public function postUrl($postUrl, $headerArray, $curlPost)
     {
         $ch = curl_init();//初始化curl
-        curl_setopt($ch, CURLOPT_URL,$postUrl);//指定网页
+        curl_setopt($ch, CURLOPT_URL, $postUrl);//指定网页
         curl_setopt($ch, CURLOPT_POST, 1);//post提交方式
-        curl_setopt($ch, CURLOPT_HTTPHEADER,$headerArray);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headerArray);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $curlPost);
         $data = curl_exec($ch);//运行curl
@@ -1910,7 +1910,7 @@ class YiMiCloud
 
     /**
      * 返回错误信息
-     * @param $code=>错误号码
+     * @param $code =>错误号码
      * @return mixed
      */
     public function getMsgError($code)
@@ -1939,7 +1939,7 @@ class YiMiCloud
             100515 => '云总机删除工作时间失败',
             100516 => '云总机未获得访问录音服务器的令牌',
             100517 => '云总机访问录音授权服务器失败',
-            100518 =>  '云总机企业不存在',
+            100518 => '云总机企业不存在',
             100519 => '云总机没有分机号可分配',
             100520 => '云总机没有设置工作时间',
             100521 => '非法的工作时间',
