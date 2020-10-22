@@ -59,9 +59,6 @@ class XHPort
         $objXhprofRun->save_run(xhprof_disable(), $title);
     }
 
-    /**
-
-    */
 
 }
 
