@@ -24,7 +24,7 @@ class TencentFace
      * AiFace constructor.
      * @param string $GroupId
      */
-    public function __construct($GroupId = '')
+    private function __construct($GroupId = '')
     {
         $this->GroupId = !empty($GroupId) ? $GroupId : $this->GroupId;
     }

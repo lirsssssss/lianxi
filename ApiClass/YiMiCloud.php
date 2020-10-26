@@ -26,7 +26,7 @@ class YiMiCloud
      * @param null $accountSid 子账号操作需要传递id
      * @param null $accountToken 子账号操作需要传递Token
      */
-    public function __construct($accountSid = null, $accountToken = null)
+    private function __construct($accountSid = null, $accountToken = null)
     {
         $time = date('YmdHis');//时间参数
         //判断主账号还是子账号 不传递子账号以及子账号token 默认为主账号
