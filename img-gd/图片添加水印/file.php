@@ -19,7 +19,7 @@ function upload_watermark_image($file){
   	header("Content-type:".$info['mime']);
 	$fun = "image".$type;
 	$fun($image);
-	//保存图片
+	//保存图片 不填写地址则直接输出图片
     $fun($image,'./img/'.uniqid().'.'.$type);
 	//销毁图片
 	imagedestroy($image);
