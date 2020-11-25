@@ -32,7 +32,7 @@ class TencentFace
     /**
      * 单例模式
      * @param string $GroupId = 人员库id 多人员库需要传递
-     * @return AiFace|null
+     * @return TencentFace|null
      */
     public static function getInstance($GroupId = '')
     {
